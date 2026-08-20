@@ -18,11 +18,18 @@
 <link rel="preload" href="../assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/InterTight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
 
-  <a class="brand back" href="../"><span class="dot"></span>kafeteer</a>
+  <div class="topbar">
+    <a class="brand back" href="../"><span class="dot"></span>kafeteer</a>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false">
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.3M12 19.3v2.3M4.7 12H2.4M21.6 12h-2.3M6.84 6.84 5.22 5.22M18.78 18.78l-1.62-1.62M17.16 6.84l1.62-1.62M5.22 18.78l1.62-1.62"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3 8.6 8.6 0 1 0 20.7 14.6Z"/></svg>
+    </button>
+  </div>
 
   <header class="pagehead">
     <img src="../assets/icons/expensepad.png" alt="ExpensePad app icon" width="48" height="48">

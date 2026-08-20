@@ -31,7 +31,9 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Light palette — the default, and the forced choice when [data-theme="light"]. */
 :root {
+  color-scheme: light;
   --bg: #FFFEFA;
   --surface: #F7F6F2;
   --ink: #302D3E;
@@ -46,8 +48,25 @@
   --radius-md: 14px;
 }
 
+/* Dark palette — explicitly picked with the toggle. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141415;
+  --surface: #2E2C37;
+  --ink: #FFFEFA;
+  --muted: #BFBCC2;
+  --faint: #918D96;
+  --line: rgba(255, 254, 250, 0.10);
+  --accent: #4DB8FF;
+  --link: #4DB8FF;
+  --accent-soft: rgba(77, 184, 255, 0.22);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Dark palette — inherited from the OS, unless light was explicitly picked. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #141415;
     --surface: #2E2C37;
     --ink: #FFFEFA;
@@ -82,6 +101,66 @@ body {
   max-width: 620px;
   margin: 0 auto;
   padding: 88px 0 64px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.theme-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  margin: -6px -4px -6px 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--surface);
+  border-color: var(--link);
+  color: var(--link);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Show the icon of the theme the button will switch *to*. */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 }
 
 .brand {
@@ -340,6 +419,6 @@ footer .sep { opacity: 0.5; margin: 0 6px; }
 
 @media print {
   body { padding: 0; color: #000; background: #fff; }
-  .brand, footer { display: none; }
+  .topbar, .brand, .theme-toggle, footer { display: none; }
   .doc p, .doc ul { color: #222; }
 }
