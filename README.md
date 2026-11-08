@@ -33,7 +33,7 @@ https://kafeteer.github.io/paletteer/privacy.html
 ```
 
 Policy text was copied from the previous WordPress and Framer pages. Billpad uses the
-Framer version (May 7, 2025), not the older WordPress one (May 11, 2023) — see the note
+Framer version (May 7, 2025), not the older WordPress one (May 11, 2023). See the note
 below.
 
 > **Billpad had two conflicting policies.** The WordPress page was a generic template

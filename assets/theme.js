@@ -37,7 +37,7 @@
       if (theme) localStorage.setItem(STORAGE_KEY, theme);
       else localStorage.removeItem(STORAGE_KEY);
     } catch (e) {
-      /* private browsing / storage disabled — the toggle still works per page */
+      /* private browsing / storage disabled: the toggle still works per page */
     }
   }
 
