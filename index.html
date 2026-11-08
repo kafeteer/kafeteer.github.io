@@ -23,9 +23,10 @@
 <script src="assets/theme.js"></script>
 </head>
 <body>
+<div class="glow" aria-hidden="true"></div>
 <div class="wrap">
 
-  <div class="topbar">
+  <div class="topbar reveal">
     <a class="brand" href="/"><span class="dot"></span>kafeteer</a>
     <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false">
       <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.3M12 19.3v2.3M4.7 12H2.4M21.6 12h-2.3M6.84 6.84 5.22 5.22M18.78 18.78l-1.62-1.62M17.16 6.84l1.62-1.62M5.22 18.78l1.62-1.62"/></svg>
@@ -33,59 +34,59 @@
     </button>
   </div>
 
-  <h1>Hey there&nbsp;👋</h1>
+  <h1 class="reveal">Hey there&nbsp;<span class="wave">👋</span></h1>
 
-  <p class="lede">
+  <p class="lede reveal">
     I'm <strong>Oscar De Moya</strong>, a software engineer from Colombia specialized in mobile
     apps. Everything here started as something I wanted on my own phone: a handful of calm money
     trackers, a color tool for other developers, and whatever else I couldn't find done the way I
     liked. SwiftUI, iCloud sync, no accounts.
   </p>
 
-  <p class="eyebrow">Apps</p>
+  <p class="eyebrow reveal">Apps <span class="count">5</span></p>
 
-  <main class="apps">
+  <main class="apps reveal">
 
     <a class="app" href="https://apps.apple.com/app/id6448975056" rel="noopener">
-      <img src="assets/icons/billpad.png" alt="Billpad app icon" width="56" height="56" loading="lazy">
+      <img src="assets/icons/billpad.png" alt="Billpad app icon" width="52" height="52" loading="lazy">
       <span class="meta">
-        <span class="name">Billpad</span>
+        <span class="name">Billpad <span class="chip">Money</span></span>
         <span class="tag">Jot down your bills and subscriptions the zen way.</span>
       </span>
       <span class="arrow" aria-hidden="true">→</span>
     </a>
 
     <a class="app" href="https://apps.apple.com/app/id6504459640" rel="noopener">
-      <img src="assets/icons/expensepad.png" alt="ExpensePad app icon" width="56" height="56" loading="lazy">
+      <img src="assets/icons/expensepad.png" alt="ExpensePad app icon" width="52" height="52" loading="lazy">
       <span class="meta">
-        <span class="name">ExpensePad</span>
+        <span class="name">ExpensePad <span class="chip">Money</span></span>
         <span class="tag">Track spending across currencies. Shop mindfully.</span>
       </span>
       <span class="arrow" aria-hidden="true">→</span>
     </a>
 
     <a class="app" href="https://apps.apple.com/app/id6529523495" rel="noopener">
-      <img src="assets/icons/shoppad.png" alt="ShopPad app icon" width="56" height="56" loading="lazy">
+      <img src="assets/icons/shoppad.png" alt="ShopPad app icon" width="52" height="52" loading="lazy">
       <span class="meta">
-        <span class="name">ShopPad</span>
+        <span class="name">ShopPad <span class="chip">Money</span></span>
         <span class="tag">Shopping lists with prices. Build a mindful shopping habit.</span>
       </span>
       <span class="arrow" aria-hidden="true">→</span>
     </a>
 
     <a class="app" href="https://apps.apple.com/app/id6740171596" rel="noopener">
-      <img src="assets/icons/incomepad.png" alt="IncomePad app icon" width="56" height="56" loading="lazy">
+      <img src="assets/icons/incomepad.png" alt="IncomePad app icon" width="52" height="52" loading="lazy">
       <span class="meta">
-        <span class="name">IncomePad</span>
+        <span class="name">IncomePad <span class="chip">Money</span></span>
         <span class="tag">Track earnings, gain clarity.</span>
       </span>
       <span class="arrow" aria-hidden="true">→</span>
     </a>
 
     <a class="app" href="https://apps.apple.com/app/id6739819339" rel="noopener">
-      <img src="assets/icons/paletteer.png" alt="Paletteer Colors app icon" width="56" height="56" loading="lazy">
+      <img src="assets/icons/paletteer.png" alt="Paletteer Colors app icon" width="52" height="52" loading="lazy">
       <span class="meta">
-        <span class="name">Paletteer Colors</span>
+        <span class="name">Paletteer Colors <span class="chip">Developer</span></span>
         <span class="tag">Build color schemes and export them as .xcassets.</span>
       </span>
       <span class="arrow" aria-hidden="true">→</span>
@@ -93,13 +94,27 @@
 
   </main>
 
-  <p class="contact">
-    Wanna keep in contact? I'm on
-    <a href="https://github.com/oscardemoya" rel="noopener">GitHub</a>, and you can see everything
-    on the <a href="https://apps.apple.com/developer/oscar-de-moya/id1236595635" rel="noopener">App&nbsp;Store</a>.
-  </p>
+  <a class="all-apps reveal" href="https://apps.apple.com/developer/oscar-de-moya/id1236595635" rel="noopener">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.18 8.48c.01-1.33.6-2.33 1.78-3.06-.66-.94-1.66-1.46-2.98-1.56-1.25-.1-2.61.72-3.11.72-.53 0-1.74-.69-2.69-.69C2.22 3.92.14 5.46.14 8.6c0 .93.17 1.89.51 2.88.46 1.3 2.1 4.49 3.82 4.44.9-.02 1.53-.64 2.7-.64 1.13 0 1.72.64 2.72.64 1.73-.03 3.22-2.93 3.65-4.23-2.31-1.09-2.36-3.17-2.36-3.21Zm-2-5.9c.96-1.14.87-2.18.84-2.55-.85.05-1.83.58-2.39 1.23-.61.7-.97 1.56-.89 2.53.92.07 1.76-.4 2.44-1.21Z"/></svg>
+    See them all on the App Store
+    <span class="go" aria-hidden="true">→</span>
+  </a>
 
-  <footer>
+  <div class="contact reveal">
+    <span class="label">Wanna keep in contact?</span>
+    <div class="links">
+      <a class="pill" href="https://github.com/oscardemoya" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
+      <a class="pill" href="https://x.com/kafeteerlabs" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>
+        @kafeteerlabs
+      </a>
+    </div>
+  </div>
+
+  <footer class="reveal">
     <p class="legal">Privacy: <a href="billpad/privacy.html">Billpad</a><span class="sep">·</span><a href="expensepad/privacy.html">ExpensePad</a><span class="sep">·</span><a href="shoppad/privacy.html">ShopPad</a><span class="sep">·</span><a href="incomepad/privacy.html">IncomePad</a><span class="sep">·</span><a href="paletteer/privacy.html">Paletteer</a></p>
     © <span id="year">2026</span> Oscar De Moya. All rights reserved.
   </footer>

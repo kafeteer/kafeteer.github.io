@@ -46,6 +46,9 @@
   --shadow: 0 1px 2px rgba(48, 45, 62, 0.04), 0 8px 24px rgba(48, 45, 62, 0.06);
   --radius-lg: 20px;
   --radius-md: 14px;
+  --ring: rgba(48, 45, 62, 0.08);
+  --chip-bg: rgba(48, 45, 62, 0.05);
+  --glow: rgba(0, 153, 255, 0.07);
 }
 
 /* Dark palette: explicitly picked with the toggle. */
@@ -61,6 +64,9 @@
   --link: #4DB8FF;
   --accent-soft: rgba(77, 184, 255, 0.22);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --ring: rgba(255, 254, 250, 0.10);
+  --chip-bg: rgba(255, 254, 250, 0.07);
+  --glow: rgba(77, 184, 255, 0.10);
 }
 
 /* Dark palette: inherited from the OS, unless light was explicitly picked. */
@@ -77,6 +83,9 @@
     --link: #4DB8FF;
     --accent-soft: rgba(77, 184, 255, 0.22);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --ring: rgba(255, 254, 250, 0.10);
+    --chip-bg: rgba(255, 254, 250, 0.07);
+    --glow: rgba(77, 184, 255, 0.10);
   }
 }
 
@@ -85,6 +94,7 @@
 html { -webkit-text-size-adjust: 100%; }
 
 body {
+  position: relative;
   margin: 0;
   padding: 0 24px;
   background: var(--bg);
@@ -97,7 +107,33 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* A single soft wash behind the header. Clipped by its own box so it can
+   never introduce horizontal scrolling. */
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 520px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow::before {
+  content: "";
+  position: absolute;
+  top: -300px;
+  left: 50%;
+  width: 900px;
+  height: 620px;
+  margin-left: -450px;
+  background: radial-gradient(closest-side, var(--glow), transparent 72%);
+}
+
 .wrap {
+  position: relative;
+  z-index: 1;
   max-width: 620px;
   margin: 0 auto;
   padding: 88px 0 64px;
@@ -193,41 +229,72 @@ body {
 .brand.back:hover::before { color: var(--link); transform: translateX(-2px); }
 
 h1 {
-  margin: 56px 0 0;
+  margin: 64px 0 0;
   font-family: "Inter Tight", "Inter", sans-serif;
   font-weight: 700;
-  font-size: 44px;
+  font-size: 52px;
   line-height: 1.1;
-  letter-spacing: -2px;
+  letter-spacing: -2.4px;
+}
+
+h1 .wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 2.6s ease-in-out 0.6s 2;
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  45% { transform: rotate(10deg); }
 }
 
 .lede {
-  margin: 20px 0 0;
+  margin: 22px 0 0;
   max-width: 52ch;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 17.5px;
+  line-height: 1.6;
   letter-spacing: -0.32px;
 }
 
 a { color: var(--link); }
 
-.lede a, .contact a, footer a, .doc a {
+.lede a, .contact a:not(.pill), footer a, .doc a {
   color: var(--link);
   text-decoration: none;
   border-bottom: 1px solid var(--accent-soft);
   transition: border-color 0.15s ease;
 }
 
-.lede a:hover, .contact a:hover, footer a:hover, .doc a:hover { border-color: var(--link); }
+.lede a:hover, .contact a:not(.pill):hover, footer a:hover, .doc a:hover { border-color: var(--link); }
 
 .eyebrow {
-  margin: 56px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 64px 0 4px;
   font-family: "Inter Tight", "Inter", sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--faint);
+}
+
+.eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.eyebrow .count {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: var(--faint);
+  opacity: 0.8;
 }
 
 .apps {
@@ -239,7 +306,7 @@ a { color: var(--link); }
 .app {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   padding: 16px;
   margin: 0 -16px;
   border-radius: var(--radius-lg);
@@ -254,29 +321,50 @@ a { color: var(--link); }
 }
 
 .app img {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow);
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 13px;
+  outline: 1px solid var(--ring);
+  outline-offset: -1px;
   background: var(--surface);
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
+
+.app:hover img { transform: scale(1.06); }
 
 .app .meta { display: block; min-width: 0; flex: 1; }
 
 .app .name {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 9px;
   font-family: "Inter Tight", "Inter", sans-serif;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 16.5px;
   letter-spacing: -0.44px;
   line-height: 1.35;
+}
+
+/* A quiet category label, so the developer tool reads apart from the
+   money trackers at a glance. */
+.chip {
+  font-family: "Inter", sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: var(--chip-bg);
+  border-radius: 100px;
+  padding: 2px 8px;
+  line-height: 1.6;
 }
 
 .app .tag {
   display: block;
   color: var(--muted);
-  font-size: 14.5px;
+  font-size: 14px;
   letter-spacing: -0.28px;
   line-height: 1.45;
 }
@@ -284,7 +372,7 @@ a { color: var(--link); }
 .app .arrow {
   flex: 0 0 auto;
   color: var(--faint);
-  font-size: 18px;
+  font-size: 16px;
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity 0.18s ease, transform 0.18s ease, color 0.18s ease;
@@ -302,22 +390,99 @@ a { color: var(--link); }
   border-radius: 6px;
 }
 
+/* The App Store sits under the list, where the apps live. It is not a way
+   to reach Oscar, so it is deliberately not a contact link. */
+.all-apps {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 22px 0 0;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.all-apps svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  fill: currentColor;
+  opacity: 0.75;
+}
+
+.all-apps .go { transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+.all-apps:hover { color: var(--link); }
+.all-apps:hover .go { transform: translateX(3px); }
+
 .contact {
-  margin: 56px 0 0;
-  padding-top: 32px;
+  margin: 64px 0 0;
+  padding-top: 36px;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 16px;
 }
 
+.contact .label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 15.5px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  background: transparent;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.pill:hover {
+  border-color: var(--link);
+  color: var(--link);
+  background: var(--surface);
+}
+
+.pill svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  fill: currentColor;
+}
+
 footer {
-  margin-top: 48px;
+  margin-top: 56px;
   color: var(--faint);
   font-size: 13.5px;
   letter-spacing: -0.14px;
 }
 
+/* Laid out as a wrapping row: the links carry no whitespace between them and
+   the separators, so as plain text the line cannot break and overflows narrow
+   viewports. */
 footer .legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 6px;
+  row-gap: 2px;
   margin: 0 0 6px;
 }
 
@@ -328,7 +493,7 @@ footer .legal a {
 
 footer .legal a:hover { color: var(--link); border-bottom-color: var(--link); }
 
-footer .sep { opacity: 0.5; margin: 0 6px; }
+footer .sep { opacity: 0.5; }
 
 .pagehead {
   display: flex;
@@ -401,13 +566,37 @@ footer .sep { opacity: 0.5; margin: 0 6px; }
 
 .doc .intro { color: var(--ink); }
 
+/* A restrained entrance: each block settles in once, on load. Guarded so the
+   content is never hidden from anyone who asks for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  }
+  .reveal:nth-child(1) { animation-delay: 0.02s; }
+  .reveal:nth-child(2) { animation-delay: 0.08s; }
+  .reveal:nth-child(3) { animation-delay: 0.14s; }
+  .reveal:nth-child(4) { animation-delay: 0.20s; }
+  .reveal:nth-child(5) { animation-delay: 0.26s; }
+  .reveal:nth-child(6) { animation-delay: 0.32s; }
+  .reveal:nth-child(7) { animation-delay: 0.38s; }
+  .reveal:nth-child(8) { animation-delay: 0.44s; }
+}
+
+@keyframes rise {
+  to { opacity: 1; transform: none; }
+}
+
 @media (max-width: 520px) {
   .wrap { padding: 56px 0 48px; }
-  h1 { font-size: 34px; letter-spacing: -1.2px; }
+  h1 { font-size: 36px; letter-spacing: -1.4px; }
   .lede { font-size: 16px; }
-  .app { gap: 14px; padding: 14px 12px; margin: 0 -12px; }
-  .app img { width: 48px; height: 48px; flex-basis: 48px; }
+  .eyebrow { margin-top: 48px; }
+  .app { gap: 14px; padding: 15px 12px; margin: 0 -12px; }
+  .app img { width: 46px; height: 46px; flex-basis: 46px; }
   .app .arrow { display: none; }
+  .contact { margin-top: 48px; }
   .pagehead { gap: 14px; }
   .pagehead img { width: 40px; height: 40px; flex-basis: 40px; }
   .pagehead h1 { font-size: 26px; letter-spacing: -0.8px; }
